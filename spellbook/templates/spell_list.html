@@ -1,0 +1,41 @@
+{% from 'xheader.html' import xheader with context %}
+{% from 'spell_list_items.html' import spell_list_items with context %}
+
+{% macro spell_list(entries) -%}
+<div class="container-fluid">
+  <h1>
+    {% set curUserId = request.args.get('uid', None) %}
+    {% if (curUserId != None) and not isMyUser(curUserId) %}
+      {% set active_page = "allusers" %}
+      {{getUser(curUserId).name}}&#39;s spellbook
+    {% endif %}
+  </h1>
+  
+  <div class="input-group" id="namesearch-group">
+    <input type="search" ID="namesearch" class="form-control" keypress="nameSearchEnterCheck()" placeholder="Spell name contains..."
+    {% if request.args.get('name', None) != None %}
+    value = "{{request.args.get('name')}}"
+    {% endif %}
+    >
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" ID="namesearchbtn" onclick="addSpellParameter('name', getElementById('namesearch').value, true, false)">Go</button>
+    </span>
+  </div>
+
+  <h4>
+      {{ xheader(request.args.copy(), request.args.get('cs', None),  'cs') }}
+      {{ xheader(request.args.copy(), request.args.get('sch', None), 'sch') }}
+      {{ xheader(request.args.copy(), request.args.get('lvl', None),  'lvl') }}
+      {{ xheader(request.args.copy(), request.args.get('rit', None),    'rit') }}
+      {{ xheader(request.args.copy(), request.args.get('conc', None),   'conc') }}
+      {{ xheader(request.args.copy(), request.args.get('ver', None),   'ver') }}
+      {{ xheader(request.args.copy(), request.args.get('som', None),   'som') }}
+      {{ xheader(request.args.copy(), request.args.get('mat', None),   'mat') }}
+  </h4>
+
+  {{spell_list_items(entries)}}
+
+</div>
+{%- endmacro %}
+
+{{spell_list(entries)}}

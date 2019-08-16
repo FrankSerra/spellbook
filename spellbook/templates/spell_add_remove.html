@@ -1,0 +1,26 @@
+{% macro spellAddRemove(spell, details=False) -%}
+{% set hide = (request.args.get('edit', None) != "1") or isMyUser(request.args.get('uid', 0)) %}
+    {% if isMySpell(spell.id) %}
+        <a class="btn btn-danger spellbook-edit" title="Remove spell from spellbook"
+            {% if details %}
+                href={{url_for('removespell', spellid=spell.id, next=url_for('spell_details', id=spell.id))}}
+            {% else %}
+                href="#" onclick="removeSpellbook(this, {{spell.id}})"
+                {% if hide %}
+                    style="display:none;"
+                {% endif %}
+            {% endif %}
+        ><span class="glyphicon glyphicon-minus"></span></a>
+    {% elif getUser() != None %}
+        <a class="btn btn-success spellbook-edit" title="Add spell to spellbook"
+            {% if details %}
+                href={{url_for('addspell', spellid=spell.id, next=url_for('spell_details', id=spell.id))}}
+            {% else %}
+                onclick="addSpellbook(this, {{spell.id}})"
+                {% if hide %}
+                    style="display:none;"
+                {% endif %}
+            {% endif %}
+        ><span class="glyphicon glyphicon-plus"></span></a>
+    {% endif %}
+{%- endmacro %}

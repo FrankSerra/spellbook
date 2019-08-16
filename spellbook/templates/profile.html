@@ -1,0 +1,7 @@
+{% extends "home.html" %}
+{% set curUser = request.args.get('uid', None) %}
+{% if curUser != None and isMyUser(curUser) %}
+    {% set active_page = "profile" %}
+{% else %}
+    {% set active_page = "allusers" %}
+{% endif %}

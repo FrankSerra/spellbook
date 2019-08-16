@@ -1,0 +1,19 @@
+{% from 'spell_add_remove.html' import spellAddRemove with context %}
+
+{% macro spell_list_items_entry(entry) -%}
+    {{spellAddRemove(entry)}}
+        
+    <a href= {{ url_for('spell_details', id=entry.id) }} >{{ entry.name }}</a>
+    <span class=spell-title-tags>
+        {% if entry.ritual == 1 %}
+            <span title="Allows casting as a ritual">R&nbsp;</span>
+        {% endif %}
+        {% if entry.concentration == 1 %}
+            <span title="Requires concentration">C</span>
+        {% endif %}
+    </span>
+{%- endmacro %}
+
+{% if entry %}
+    {{spell_list_items_entry(entry)}}
+{% endif %}

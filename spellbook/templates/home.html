@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% set localparms = request.args.copy() %}
+{% set request_school, request_class, request_level = localparms.get('sch', None), localparms.get('cs', None), localparms.get('lvl', None) %}
+{% set request_rit, request_conc = localparms.get('rit', None), localparms.get('conc', None) %}
+{% set request_user = localparms.get('uid', None) %}
+{% set active_page = active_page|default('all') -%}
+{% set navclass = navclass|default('no-bottom') -%}
+
+{% from "spell_list.html" import spell_list with context %}
+
+{% block filtercontrol %}
+<nav class="navbar navbar-default {{navclass}}">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#filternav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{url_for('about')}}">Spellbook v{{version}}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="filternav">
+        <ul class="nav navbar-nav">
+            {% if active_page == "all" %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href= {{ url_for('spells_by_level') }}>All spells</a>
+            </li>
+            {% if getUser() != None %}
+                <li 
+                {% if active_page == "profile" %}
+                    class="active"
+                {% endif %}
+                >
+                    <a href= {{ url_for('profile', uid=getUser().id) }}>My spellbook</a>
+                </li>
+            {% endif %}
+            <li
+                {% if active_page == "allusers" %}
+                    class="active"
+                {% endif %}
+                >
+                    <a href= {{ url_for('profilelist') }}>All users</a>
+            </li>
+{% endblock %}
+{% block userblock %}
+        </ul> <!-- navbar-nav -->
+            <ul class="nav navbar-nav navbar-right">
+                {% if getUser() == None %}
+            {% if active_page == "login" %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                    <a href= {{ url_for('login') }}>Login</a>
+                </li>
+            {% if active_page == "register" %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                    <a href="{{url_for('register')}}">Register</a>
+                </li>
+                {% else %}
+                    <li>
+                        <a>{{getUser().name}}</a>
+                    </li>
+                    <li>
+                        <a href= {{ url_for('logout') }}>Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+    </div> <!-- filterdiv-->
+</nav>
+{% endblock %}
+
+{% block spellblock %}
+    {% include "spellnav.html" %}
+{% endblock %}
+
+{% block body %}
+    {{spell_list(entries)}}
+{% endblock %}

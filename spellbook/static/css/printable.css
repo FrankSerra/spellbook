@@ -1,0 +1,30 @@
+html, body, h1, h3, div, table, p { 
+    float: none !important; 
+}
+
+table {
+    border: none;
+    border-spacing: 0px;
+}
+.printable-spell {
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+.printable-spell h3 {
+    margin-bottom: 0px;
+}
+
+.att-head {
+    font-weight: bold;
+}
+
+@media print {
+    .printable-level-block {
+        page-break-before: always;
+    }
+
+    .printable-spell {
+        page-break-inside: avoid;
+    }
+}

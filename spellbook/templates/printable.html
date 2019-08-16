@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Spellbook - Printable</title>
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/printable.css') }}">
+    </head>
+    <body>
+        {% set levels = range(0,10) %}
+        {% for level in levels %}
+            {% if entries|selectattr('level', 'equalto', level)|list|length > 0 %}
+                {% if levels|list|length > 1 %}
+                    {% if level == 0 %}
+                        <h1 class="printable-level-block">Cantrips</h1>
+                    {% else %}
+                        <h1 class="printable-level-block">Level {{ level }}</h1>
+                    {% endif %}
+                {% endif %}
+
+                {% for entry in entries|selectattr('level', 'equalto', level) %}
+                    <div class="printable-spell">
+                        <h3>{{entry.name}}
+                            {% if entry.ritual %}
+                            [ritual]
+                            {% endif %}
+                        </h3>
+                        <em>
+                            {% if level == 0 %}
+                                {{entry.school}} cantrip
+                            {% else %}
+                                Level {{level}} {{entry.school | lower}}
+                            {% endif %}
+                            &nbsp;|&nbsp;{{entry.components}}
+                        </em>
+                        <table>
+                            <tr>
+                                <td class="att-head">Cast time:</td>
+                                <td>{{entry.cast_time}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="att-head">Range:</td>
+                                <td>{{entry.range_}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="att-head">Duration:</td>
+                                <td>{{entry.duration}}</td>
+                            </tr>
+                        </table>
+                        <p class="printable-spell-text">
+                            {{entry.descrip | safe}}
+                        </p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </body>
+</html>

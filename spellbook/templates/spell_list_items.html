@@ -1,0 +1,51 @@
+{% from 'spell_list_items_entry.html' import spell_list_items_entry with context %}
+
+{% macro spell_list_items(entries) -%}
+    {% set levels = range(0,10) %}
+    {% for level in levels %}
+        {% if entries|selectattr('level', 'equalto', level)|list|length > 0 %}
+            {% if levels|list|length > 1 %}
+                {% if level == 0 %}
+                    <h2>Cantrips</h2>
+                {% else %}
+                    <h2>Level {{ level }}</h2>
+                {% endif %}
+            {% endif %}
+
+            {% if request.args.get('grid', None) == "1" %}
+                <table class="table table-bordered table-condensed table-responsive">
+                    <th>Name</th>
+                    <th>Cast</th>
+                    <th>Range</th>
+                    <th class="spellbook-hide-wide">Duration</th>
+                    {% for entry in entries|selectattr('level', 'equalto', level) %}
+                    <tr>
+                        <td>
+                            {{spell_list_items_entry(entry)}}
+                        </td>
+                        <td>
+                            {{entry.cast_time.split(',')[0]}}
+                        </td>
+                        <td>
+                            {{entry.range_.split('(')[0]}}
+                        </td>
+                        <td class="spellbook-hide-wide">
+                            {{entry.duration}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <ul class=entries>
+                {% for entry in entries|selectattr('level', 'equalto', level) %}
+                    <li>
+                        {{spell_list_items_entry(entry)}}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
+{{spell_list_items(entries)}}

@@ -1,0 +1,28 @@
+{% extends "home.html" %}
+{% set active_page = "register" %}
+{% block spellblock %}{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <legend>Register</legend>
+        <form action='register' method='POST'>
+            <div class="form-group">
+                <label for="uname">Username</label>
+                <input type='text' class="form-control" name='uname' id='uname' placeholder='username'></input>
+            </div>
+
+            <div class="form-group">
+                <label for="pw">Password</label>
+                <input type='password' class="form-control" name='pw' id='pw' placeholder='password'></input>
+            </div>
+
+            <div class="form-group">
+                <label for="pw">Retype password</label>
+                <input type='password' class="form-control" name='pw2' id='pw2' placeholder='retype password'></input>
+            </div>
+
+            <div class="form-group">
+                <button type='submit' class="btn btn-default">Register</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

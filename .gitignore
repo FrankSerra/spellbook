@@ -1,0 +1,6 @@
+spellbook.wsgi
+__pycache__/
+spellbook.egg-info/
+spellbook/dnd.db
+spellbook/__pycache__/
+spellbook/other/spells.xml

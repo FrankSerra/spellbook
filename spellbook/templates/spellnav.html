@@ -1,0 +1,60 @@
+{% set localparms = request.args.copy() %}
+{% set request_school, request_class, request_level = localparms.get('sch', None), localparms.get('cs', None), localparms.get('lvl', None) %}
+{% set request_rit, request_conc = localparms.get('rit', None), localparms.get('conc', None) %}
+{% from 'filter_class.html' import filter_class with context %}
+{% from 'filter_key.html' import filter_key with context %}
+
+<div ID="spellfilternav">
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#spellnav" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Filters</a>
+    </div>
+    <div class="collapse navbar-collapse" id="spellnav">
+      <ul class="nav navbar-nav">
+            {% set curUser = request.args.get('uid', None) %}
+            {% if curUser != None %}
+                <li>
+                    <a href= {{ url_for('printable', uid=curUser) }} target="_blank" title="Printable view">Print</a>
+                </li>
+            {% endif %}
+
+            {% if request.args.get('grid', None) == "1" %}
+                <li>
+                    <a href="#" title="See vertical list" role="button" class="btn btn-default" ID="spellbook-edit-toggle" onclick="gridMode(false)" >List</a>
+                </li>
+            {% else %}
+                {% if (getUser() != None) and isMyUser(request.args.get('uid', getUser().id)) %}
+                    {% if (request.args.get('edit', "0")|string == "1") %}
+                    <li>
+                        <a href="#" title="View spells only" role="button" class="btn btn-success" ID="spellbook-edit-toggle" onclick="editMode(false)" >Edit</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="#" title="Add and remove spells from spellbook" role="button" class="btn btn-default" ID="spellbook-edit-toggle" onclick="editMode(true)" >Edit</a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+                
+                <li>
+                    <a href="#" title="See grid view" role="button" class="btn btn-default" ID="spellbook-edit-toggle" onclick="gridMode(true)" >Grid</a>
+                </li>
+            {% endif %}
+
+            {{ filter_class(request_class, localparms.copy()) }}
+            {{ filter_key("sch",  "School",        request_school, get_schools(), localparms.copy()) }}
+            {{ filter_key("lvl",  "Level",         request_level,  range(0,10),   localparms.copy()) }}
+            {{ filter_key("rit",  "Ritual",        request_rit,    ("1", "0"),    localparms.copy()) }}
+            {{ filter_key("conc", "Concentration", request_conc,   ("1", "0"),    localparms.copy()) }}
+            {{ filter_key("ver",  "Verbal",        request_conc,   ("1", "0"),    localparms.copy()) }}
+            {{ filter_key("som",  "Somatic",       request_conc,   ("1", "0"),    localparms.copy()) }}
+            {{ filter_key("mat",  "Material",      request_conc,   ("1", "0"),    localparms.copy()) }}
+      </ul>
+    </div>
+</nav>
+</div>

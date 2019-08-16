@@ -1,0 +1,52 @@
+{% extends "home.html" %}
+{% set active_page = "none" %}
+
+{% block spellblock %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <legend>About Spellbook</legend>
+        <p>
+            Look up the PHB text of a spell, filter by various spell properties, maintain your personal spellbook.
+            </p>
+        <p>
+            As much as possible has been designed to use URL query parameters in the interest of bookmarking and shareability. Set the spell filters you want and send the URL to someone else to look at!
+        </p>
+        <p>
+            This site was designed to be easy to use on mobile devices - go nuts.
+        </p>
+
+
+        <legend>Tech Credits</legend>
+        <p>
+            Backend: <a href="https://docs.python.org/3/" target="_blank">Python3</a>, <wbr>
+                     <a href="http://flask.pocoo.org/docs/0.12/" target="_blank">Flask</a>, <wbr>
+                     <a href="https://flask-login.readthedocs.io/en/latest/" target="_blank">Flask&#8209;Login</a>, <wbr>
+                     <a href="http://flask-sqlalchemy.pocoo.org/2.1/" target="_blank">Flask&#8209;SQLAlchemy</a>
+        </p>
+
+        <p>
+            Database: <a href="https://www.sqlite.org/docs.html" target="_blank">SQLite</a>
+        </p>
+
+        <p>
+            Frontend: <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>,
+                      <a href="https://jquery.com/" target="_blank">jQuery</a>
+        </p>
+
+        <legend>Planned features</legend>
+        <table class="table table-condensed table-bordered">
+            <tr>
+                <th>Feature</th>
+                <th>Status</th>
+            </tr>
+            {% for f in features %}
+            <tr>
+                <td>{{f.text}}</td>
+                <td class="{{f.color}}">{{f.status}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

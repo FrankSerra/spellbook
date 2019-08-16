@@ -1,0 +1,101 @@
+.dl-horizontal dd{
+	margin-bottom:5px !important;
+}
+
+a.remove-filter {
+    text-decoration: none;
+    outline: 0;
+}
+
+small.raised-x {
+	vertical-align: 50%;
+}
+
+.no-bottom {
+    margin-bottom: 0px;
+}
+
+.panel-heading .panel-title a{
+    text-decoration:none;
+}
+
+.panel-heading .panel-title a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\2212";
+    color: grey;
+    float:left;
+}
+
+.panel-heading .panel-title a.collapsed:after {
+    content: "\002b";
+}
+
+.spell-details-table {
+    margin-bottom:0px;
+    margin-top:10px;
+}
+
+.spell-details-table tr td:first-child{
+    font-weight:bold;
+}
+
+.spell-details-panel {
+    padding: 0 0 0 0;
+}
+
+.spell-details-container {
+	margin-top:5px;
+}
+
+.loader {
+    display:none;
+    background-image: url("thewiz.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+    width: 25%;
+    height: 25%;
+    animation: spin 4s linear infinite;
+    position:absolute;
+    margin: 25% 25% 25% 25%;
+}
+
+a#spellbook-edit-toggle.btn-success {
+    color: white;
+}
+
+a#spellbook-edit-toggle.btn-success:hover {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.spellbook-button-margin {
+    padding-right: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+    .loader {
+        width: 50%;
+        height: 50%;
+    }
+
+    li {
+        font-size: 20px !important;
+    }
+
+    .spellbook-hide-wide {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+	#namesearch-group {
+		width:500px;
+	}
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); transform-origin: center center; }
+    100% { transform: rotate(360deg); transform-origin: center center; }
+}

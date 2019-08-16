@@ -1,0 +1,22 @@
+{% extends "home.html" %}
+{% set active_page = "allusers" %}
+
+{% block spellblock %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h2>
+            All User Spellbooks
+        </h2>
+        <ul class="list-group">
+            {% for u in users %}
+                {% if not isMyUser(u.id) %}
+                <li class="list-group-item">
+                    <a href="{{url_for('profile', uid=u.id)}}">{{u.name}}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

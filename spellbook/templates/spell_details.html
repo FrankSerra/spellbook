@@ -1,0 +1,56 @@
+{% extends "home.html" %}
+{% from 'spell_add_remove.html' import spellAddRemove with context %}
+{% set navclass = '' %}
+
+{% block twitter_title %}
+"{{spell.name}}"
+{% endblock %}
+	  
+{% block twitter_description %}
+"{{ spell.school }} spell on Spellbook" 
+{% endblock %}
+
+{% block title %}{{ spell.name }}{% endblock %}
+{% block filtercontrol %}{{super()}}{% endblock %}
+{% block spellblock %}{% endblock %}
+{% block userblock %}{{super()}}{% endblock %}
+{% block body %}
+<div class="container-fluid">
+	
+	<table>
+		<tr>
+			<td class="spellbook-button-margin">
+				{{spellAddRemove(spell, 1)}}
+			</td>
+			<td>
+				<span class="h1 text-center">{{ spell.name }}</span>
+			</td>
+		</tr>
+	</table>
+
+	<div class="panel panel-default spell-details-container">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" href="#details">&nbsp;<strong>Details</strong></a>
+			</h4>
+			<div id="details" class="panel-collpase collapse in">
+				<div class="panel-body spell-details-panel">
+					<table class="table table-striped spell-details-table">
+						<tr><td>Level:&nbsp;</td>        <td>{{ "Cantrip" if spell.level == 0 else spell.level  }}</td></tr>
+						<tr><td>School:&nbsp;</td>       <td>{{ spell.school }}</td></tr>
+						<tr><td>Classes:&nbsp;</td>      <td>{{ spell.classes }}</td></tr>
+						<tr><td>Components:&nbsp;</td>   <td>{{ spell.components }}</td></tr>
+						<tr><td>Concentration:&nbsp;</td><td>{{ getYesNo(spell.concentration) }}</td></tr>
+						<tr><td>Ritual:&nbsp;</td>       <td>{{ getYesNo(spell.ritual) }}</td></tr>
+						<tr><td>Cast time:&nbsp;</td>    <td>{{ spell.cast_time }}</td></tr>
+						<tr><td>Range:&nbsp;</td>        <td>{{ spell.range_ }}</td></tr>
+						<tr><td>Duration:&nbsp;</td>     <td>{{ spell.duration }}</td></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<p class=spell_description>{{ spell.descrip|safe }}</p>
+</div>
+{% endblock %}

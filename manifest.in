@@ -1,0 +1,3 @@
+graft spellbook/templates
+graft spellbook/static
+include spellbook/schema.sql

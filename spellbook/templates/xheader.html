@@ -1,0 +1,8 @@
+{% macro xheader(xparms, xrequestparm, xkey) -%}
+{% if xrequestparm != None %}
+    <a class="remove-filter" href="#" title="Remove filter" onclick="addSpellParameter('{{xkey}}', '{{getXHeaderID(xkey, xrequestparm)}}')">
+        <small class="raised-x">X</small>&nbsp;{{getDescriptionForKeyValue(xkey, xrequestparm)}}
+    </a>
+    <br>
+{% endif %}
+{%- endmacro %}
